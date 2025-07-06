@@ -71,5 +71,3 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 }
-
-// UI -> Controller -> Service -> Repository -> database
