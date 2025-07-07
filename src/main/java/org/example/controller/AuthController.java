@@ -1,11 +1,13 @@
 package org.example.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.*;
 import org.example.model.entity.User;
 import org.example.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +38,7 @@ public class AuthController {
     public ResponseEntity<ApiResponse<AuthResponse>> login(@Valid @RequestBody LoginRequest loginRequest) {
         try {
             AuthResponse authResponse = userService.Login(loginRequest);
-            return ResponseEntity.ok(ApiResponse.success("User Logegd In", authResponse));
+            return ResponseEntity.ok(ApiResponse.success("User Logged In", authResponse));
         } catch (Exception e) {
             logger.log(Level.FINE, "Error while Login" + e.getMessage());
             return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
@@ -57,12 +59,17 @@ public class AuthController {
     @GetMapping("/check-username/{username}")
     public ResponseEntity<ApiResponse<Boolean>> checkUsernameAvailability(@PathVariable String username) {
         try {
-            Boolean isAvailable = userService.existByUserName(username);
-            return ResponseEntity.ok(ApiResponse.success("UserName availability response", isAvailable));
+            Boolean isPresent = userService.existByUserName(username);
+            return ResponseEntity.ok(ApiResponse.success("UserName availability response", !isPresent));
         } catch (Exception exception) {
             logger.log(Level.INFO, "Error while getting user by username" + exception.getMessage());
             return ResponseEntity.badRequest().body(ApiResponse.error(exception.getMessage()));
         }
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<ApiResponse<String>> testEndpoint() {
+        return ResponseEntity.ok(ApiResponse.success("JWT is working! You are authenticated.", "success"));
     }
 
     @GetMapping("/check-email/{email}")

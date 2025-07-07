@@ -3,7 +3,6 @@ package org.example.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -11,12 +10,10 @@ import lombok.AllArgsConstructor;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class LoginRequest {
-    @NotBlank(message = "Username is required")
     private String userName;
-
-    @NotBlank(message = "email is required")
     private String email;
 
     @NotBlank(message = "Password is required")
