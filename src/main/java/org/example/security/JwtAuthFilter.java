@@ -54,6 +54,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         try {
             String jwt = authHeader.substring(7);
             String username = jwtHelper.extractUserName(jwt);
+
+            final String headerUser = request.getHeader("userName");
+            if (!headerUser.equals(username)) {
+                sendErrorResponse(response, HttpStatus.UNAUTHORIZED, "Invalid or expired token");
+                return;
+            }
+
             
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
