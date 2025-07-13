@@ -23,7 +23,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtHelper jwtHelper;
     private final UserDetailsService userDetailsService;
     
-    // Define public endpoints that don't require JWT validation
     private final List<String> publicEndpoints = Arrays.asList(
         "/api/token/generate",
         "/api/auth/signup", 
@@ -75,7 +74,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                     
-                    // Store the validated username in request attributes for controllers to access
                     request.setAttribute("authenticatedUsername", username);
                 } else {
                     sendErrorResponse(response, HttpStatus.UNAUTHORIZED, "Invalid or expired token");

@@ -43,7 +43,6 @@ public class User {
         updatedAt=LocalDate.now();
     }
 
-    // Manual getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getUsername() { return username; }
@@ -67,7 +66,6 @@ public class User {
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
 
-    // Manual builder
     public static UserBuilder builder() {
         return new UserBuilder();
     }
