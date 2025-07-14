@@ -56,6 +56,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/token/**").permitAll()
                         .requestMatchers("/api/auth/signup").permitAll()
                         .requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers("/api/mail/send").permitAll()
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
