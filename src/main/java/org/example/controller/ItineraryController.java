@@ -79,27 +79,6 @@ public class ItineraryController {
         }
     }
 
-    @GetMapping("/{itineraryId}")
-    public ResponseEntity<ApiResponse<ItineraryResponse>> getItineraryById(
-            HttpServletRequest request,
-            @RequestParam Long userId,
-            @PathVariable Long itineraryId) {
-        
-        try {
-            String tokenUsername = getAuthenticatedUsername(request);
-            if (!validateUserAccess(tokenUsername, userId)) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                        .body(ApiResponse.error("Token username does not match user"));
-            }
-            
-            ItineraryResponse itinerary = itineraryService.getItineraryById(userId, itineraryId);
-            return ResponseEntity.ok(ApiResponse.success("Itinerary retrieved successfully", itinerary));
-        } catch (RuntimeException e) {
-            log.error("Error fetching itinerary: {}", e.getMessage());
-            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
-        }
-    }
-
     @GetMapping("/search")
     public ResponseEntity<ApiResponse<List<ItineraryResponse>>> searchItineraries(
             HttpServletRequest request,
