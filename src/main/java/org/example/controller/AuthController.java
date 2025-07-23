@@ -67,11 +67,6 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<ApiResponse<String>> testEndpoint() {
-        return ResponseEntity.ok(ApiResponse.success("JWT is working! You are authenticated.", "success"));
-    }
-
     @GetMapping("/check-email/{email}")
     public ResponseEntity<ApiResponse<Boolean>> checkExistsByEmail(@PathVariable String email) {
         try {
@@ -80,6 +75,15 @@ public class AuthController {
         } catch (Exception exception) {
             logger.log(Level.INFO, "Error while getting user by username" + exception.getMessage());
             return ResponseEntity.badRequest().body(ApiResponse.error(exception.getMessage()));
+        }
+    }
+    @PostMapping("/google-auth")
+    public ResponseEntity<ApiResponse<AuthResponse>> googleAuth(@Valid @RequestBody GoogleAuthRequest googleAuthRequest){
+        try {
+            AuthResponse authResponse=userService.googleAuth(googleAuthRequest);
+            return ResponseEntity.ok(ApiResponse.success("Google Auth Success", authResponse));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
         }
     }
 }
