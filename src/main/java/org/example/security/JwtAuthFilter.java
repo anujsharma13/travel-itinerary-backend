@@ -26,7 +26,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final List<String> publicEndpoints = Arrays.asList(
         "/api/token/generate",
         "/api/auth/signup", 
-        "/api/auth/login",
+        "/api/auth/login", "/api/auth/google-auth",
         "/api/mail/send",
         "/api/payments/health",
         "/api/payments/config"
