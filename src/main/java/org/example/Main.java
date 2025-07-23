@@ -4,11 +4,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /*
-Google Login
+next
+Review Frontend
+Speech to text and manual search
+Sending notification after adding itinerary
+
+next.next
 Html page for payment gateway
-Speech to test
-Reviews Page
-Notification sending
+
+next.next.next
+Newsletter
  */
 @SpringBootApplication
 public class Main {

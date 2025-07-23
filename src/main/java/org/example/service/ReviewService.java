@@ -24,7 +24,7 @@ public class ReviewService {
     }
     public ReviewResponse submitResponse(ReviewRequest request, String userName){
         Review review=new Review();
-        review.setReviewerName(request.getReviewerName());
+        review.setReviewerName(userName);
         review.setRating(request.getRating());
         User user=userRepository.findByUsername(userName).orElse(null);
         if(user==null)
