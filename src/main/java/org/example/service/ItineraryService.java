@@ -2,6 +2,7 @@ package org.example.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.dto.EmailRequest;
 import org.example.dto.ItineraryRequest;
 import org.example.dto.ItineraryResponse;
 import org.example.model.entity.Itinerary;
@@ -21,6 +22,7 @@ public class ItineraryService {
     private final ItineraryRepository itineraryRepository;
     private final UserRepository userRepository;
     private final TextProcessingService textProcessingService;
+    private final EmailService emailService;
 
     public ItineraryResponse saveItinerary(Long userId, ItineraryRequest request) {
         User user = userRepository.findById(userId)
@@ -38,6 +40,7 @@ public class ItineraryService {
                 .build();
 
         Itinerary savedItinerary = itineraryRepository.save(itinerary);
+        sendEmail(user, request);
         return mapToResponse(savedItinerary);
     }
 
@@ -70,7 +73,7 @@ public class ItineraryService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         String processedSearchTerm = textProcessingService.processText(searchTerm);
-        List<Itinerary> itineraries=itineraryRepository.findByUserOrderByCreatedAtDesc(user);
+        List<Itinerary> itineraries = itineraryRepository.findByUserOrderByCreatedAtDesc(user);
         return itineraries.stream().filter(itinerary -> {
             String processedDestination = textProcessingService.processText(itinerary.getDestination());
             String processedItinerary = textProcessingService.processText(itinerary.getFullItinerary());
@@ -106,5 +109,17 @@ public class ItineraryService {
                 .createdAt(itinerary.getCreatedAt())
                 .updatedAt(itinerary.getUpdatedAt())
                 .build();
+    }
+
+    public Boolean sendEmail(User user, ItineraryRequest request) {
+        EmailRequest emailRequest = new EmailRequest();
+        emailRequest.setMessage("Thank you for checking your travel itinerary with us! We hope the AI-powered recommendations have helped you plan your trip.\n" +
+                "\n" +
+                "For even better support and personalized assistance, we invite you to explore our premium plans, starting at very affordable prices. With premium access, you'll enjoy priority support and exclusive features tailored to make your travel experience even more seamless.\n" +
+                "\n" +
+                "If you have any questions or need help enrolling, feel free to reach out!");
+        emailRequest.setTo(user.getEmail());
+        emailRequest.setSubject("Thank You for Checking Your Itinerary! ✨");
+        emailService.sendEmail(emailRequest);
     }
 }
