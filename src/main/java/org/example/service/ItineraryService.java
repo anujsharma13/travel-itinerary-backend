@@ -111,7 +111,7 @@ public class ItineraryService {
                 .build();
     }
 
-    public Boolean sendEmail(User user, ItineraryRequest request) {
+    public void sendEmail(User user, ItineraryRequest request) {
         EmailRequest emailRequest = new EmailRequest();
         emailRequest.setMessage("Thank you for checking your travel itinerary with us! We hope the AI-powered recommendations have helped you plan your trip.\n" +
                 "\n" +
