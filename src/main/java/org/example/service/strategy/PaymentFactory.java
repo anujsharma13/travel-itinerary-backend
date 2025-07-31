@@ -1,11 +1,19 @@
 package org.example.service.strategy;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+@Component
+@RequiredArgsConstructor
 public class PaymentFactory {
-    public static IPaymentStrategy getInstance(String type)
-    {
+    
+    private final ApiGateWayPayments apiGateWayPayments;
+    private final CryptoPayments cryptoPayments;
+    
+    public IPaymentStrategy getInstance(String type) {
         return switch (type) {
-            case "gateway" -> new ApiGateWayPayments();
-            case "crypto" -> new CryptoPayments();
+            case "gateway" -> apiGateWayPayments;
+            case "crypto" -> cryptoPayments;
             default -> null;
         };
     }

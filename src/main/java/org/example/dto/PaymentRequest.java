@@ -28,14 +28,15 @@ public class PaymentRequest {
     
     @NotBlank(message = "Payment type is required")
     private String paymentType; // "gateway" or "crypto"
-    
+
     private String description;
-    
+
     private Long userId;
-    
+
     private Long itineraryId; // Optional: link payment to specific itinerary
-    
+
     // Customer details
     private String customerEmail;
     private String customerName;
+    private String subscriptionPlan;
 } 

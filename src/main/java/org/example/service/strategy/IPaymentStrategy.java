@@ -4,5 +4,5 @@ import org.example.dto.PaymentRequest;
 import org.example.dto.PaymentResponse;
 
 public interface IPaymentStrategy {
-    PaymentResponse processPayment(PaymentRequest paymentRequest);
+    PaymentResponse processPayment(PaymentRequest paymentRequest,String userName);
 }

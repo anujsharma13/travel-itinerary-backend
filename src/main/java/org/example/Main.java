@@ -4,16 +4,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /*
-next
-Review Frontend
-Speech to text and manual search
-Sending notification after adding itinerary
-
 next.next
 Html page for payment gateway
 
 next.next.next
 Newsletter
+Swagger
  */
 @SpringBootApplication
 public class Main {

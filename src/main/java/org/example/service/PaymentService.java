@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class PaymentService {
 
-    public PaymentResponse processPayment(PaymentRequest paymentRequest) {
+    private final PaymentFactory paymentFactory;
+
+    public PaymentResponse processPayment(PaymentRequest paymentRequest, String userName) {
         try {
             if (paymentRequest == null) {
                 log.error("Payment request is null");
@@ -25,7 +27,7 @@ public class PaymentService {
                 return PaymentResponse.failed("Payment amount must be greater than zero");
             }
 
-            IPaymentStrategy paymentStrategy = PaymentFactory.getInstance(paymentRequest.getPaymentType());
+            IPaymentStrategy paymentStrategy = paymentFactory.getInstance(paymentRequest.getPaymentType());
             
             if (paymentStrategy == null) {
                 log.error("Unsupported payment type: {}", paymentRequest.getPaymentType());
@@ -37,7 +39,7 @@ public class PaymentService {
                     paymentRequest.getCurrency(), 
                     paymentRequest.getPaymentType());
 
-            PaymentResponse response = paymentStrategy.processPayment(paymentRequest);
+            PaymentResponse response = paymentStrategy.processPayment(paymentRequest, userName);
             
             log.info("Payment processing completed. Success: {}, Payment ID: {}", 
                     response.isSuccess(), response.getPaymentId());
