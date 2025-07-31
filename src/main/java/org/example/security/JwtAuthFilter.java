@@ -29,7 +29,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         "/api/auth/login", "/api/auth/google-auth",
         "/api/mail/send",
         "/api/payments/health",
-        "/api/payments/config"
+        "/api/payments/config",
+        "/api/itineraries",
+        "/swagger-ui/index.html",
+        "/swagger-ui",
+        "/swagger-ui/",
+        "/swagger-ui.html",
+        "/v3/api-docs",
+        "/v3/api-docs/"
     );
 
     public JwtAuthFilter(JwtHelper jwtHelper, UserDetailsService userDetailsService) {
